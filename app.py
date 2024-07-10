@@ -11,7 +11,7 @@ scaler = joblib.load('scaler.pkl')
 app = Flask(__name__)
 
 # Database configuration
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///anemia.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///instance/anemia.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -55,7 +55,8 @@ def predict():
 
 def initialize_database():
     """Initializes the database and tables if they don't exist."""
-    if not os.path.exists('anemia.db'):
+    if not os.path.exists('instance/anemia.db'):
+        os.makedirs('instance', exist_ok=True)
         print("Creating database tables...")
         db.create_all()
         print("Tables created.")
